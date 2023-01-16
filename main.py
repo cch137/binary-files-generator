@@ -57,3 +57,4 @@ while targetSize > 0:
 for t in threads: t.start()
 for t in threads: t.join()
 print(f'Time used: {round(time.time() - T0, 4)}s')
+input('Press ENTER to continue...')
