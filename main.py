@@ -3,7 +3,7 @@ import random, sys, shutil, os, threading, math, time
 
 T0 = time.time()
 CONTENT_IS_RANDOM = False
-OUTPUT_PATH = 'output/'
+OUTPUT_PATH = './output/'
 shutil.rmtree(OUTPUT_PATH, ignore_errors=True)
 os.mkdir(OUTPUT_PATH)
 
@@ -46,14 +46,15 @@ class statusThread(threading.Thread):
       print(f'Processing... {round(100 * doneThreadsAmount / totalFileAmounts, 2)}% ({doneThreadsAmount}/{totalFileAmounts})')
       time.sleep(5)
 
-status = statusThread()
-status.start()
-
 while targetSize > 0:
   filesize = min(targetSize, splitSize)
   targetSize -= splitSize
   threads.append(generateThread(f'{OUTPUT_PATH}{"{:08d}".format(fileNumber)}.temp', filesize))
   fileNumber += 1
+
+status = statusThread()
+status.start()
+
 for t in threads: t.start()
 for t in threads: t.join()
 print(f'Time used: {round(time.time() - T0, 4)}s')
